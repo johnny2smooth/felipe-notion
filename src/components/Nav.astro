@@ -1,0 +1,18 @@
+---
+export interface Props {
+  titles: string[];
+}
+const { titles } = Astro.props;
+---
+
+<nav>
+  <ul>
+    {
+      titles.map((title) => (
+        <li>
+          <a href={`#${title}`}>{title}</a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

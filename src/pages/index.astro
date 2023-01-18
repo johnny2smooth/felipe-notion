@@ -1,7 +1,8 @@
 ---
-import Layout from "../layouts/Layout.astro";
 import dotenv from "dotenv";
 import { Client } from "@notionhq/client";
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
 
 dotenv.config();
 
@@ -11,17 +12,25 @@ const response = await notion.databases.query({
   database_id: "8310cd12974b42989c496f8b4480546e",
 });
 
-const firstBlock = await notion.blocks.children.list({
-  block_id: response.results[0].id,
+let [services, about, intro] = response.results;
+let titles = response.results.map((block) =>
+  block.properties.Name.type === "title"
+    ? block.properties.Name.title[0].plain_text
+    : "Missing Title"
+);
+
+const servicesBlock = await notion.blocks.children.list({
+  block_id: services.id,
 });
 ---
 
 <Layout title="Welcome to Astro.">
   <main class="stack">
+    <Nav titles={titles} />
     <h1>Felipe <span class="text-gradient">Matamala</span></h1>
 
     {
-      firstBlock.results.map((block) => {
+      servicesBlock.results.map((block) => {
         if (block.type === "paragraph") {
           if (block.paragraph.rich_text.length === 0) return;
           return (
