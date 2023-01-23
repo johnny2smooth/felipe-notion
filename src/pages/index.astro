@@ -6,25 +6,28 @@ import Nav from "../components/Nav.astro";
 
 dotenv.config();
 
-const notion = new Client({ auth: process.env.NOTION_TOKEN });
+export const notion = new Client({ auth: process.env.NOTION_TOKEN });
 
-const response = await notion.databases.query({
+export const response = await notion.databases.query({
   database_id: "8310cd12974b42989c496f8b4480546e",
 });
 
-let [services, about, intro] = response.results;
-let titles = response.results.map((block) =>
+export const [services, about, home] = response.results;
+
+export const titles = response.results.map((block) =>
   block.properties.Name.type === "title"
     ? block.properties.Name.title[0].plain_text
     : "Missing Title"
 );
 
 const servicesBlock = await notion.blocks.children.list({
-  block_id: services.id,
+  block_id: home.id,
 });
+
+//
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="Felipe Matamala">
   <Nav titles={titles} />
   <main class="stack">
     <h1>Felipe <span class="text-gradient">Matamala</span></h1>

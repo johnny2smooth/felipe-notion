@@ -13,6 +13,20 @@ const { titles } = Astro.props;
       class="flex items-end justify-between border-b border-gray-800 px-4 py-5 sm:px-6 lg:px-8 xl:px-0"
     >
       <a class="text-4xl" href="/">🏠</a>
+      <div>
+        {
+          titles.map((title) => {
+            const id = title.split(" ").join("-").toLowerCase();
+            return id === "home" ? (
+              ""
+            ) : (
+              <a class="text-md" href={`/${id}`}>
+                {title}
+              </a>
+            );
+          })
+        }
+      </div>
     </div>
   </div>
 </header>
