@@ -1,14 +1,19 @@
 ---
-export interface Props {
-  titles: string[];
-}
-const { titles } = Astro.props;
+import { getNotion } from "../utils/getNotion";
+
+const { response } = await getNotion("8310cd12974b42989c496f8b4480546e");
+
+const titles = response.results.map((block) =>
+  block.properties.Name.type === "title"
+    ? block.properties.Name.title[0].plain_text
+    : "Missing Title"
+);
 ---
 
 <header
   class="sticky top-0 z-30 h-[72px] bg-gray-900 bg-opacity-50 backdrop-blur backdrop-filter firefox:bg-opacity-90"
 >
-  <div class="mx-auto max-w-8xl xl:px-8">
+  <div class="mx-auto max-w-7xl xl:px-8">
     <div
       class="flex items-end justify-between border-b border-gray-800 px-4 py-5 sm:px-6 lg:px-8 xl:px-0"
     >
@@ -20,7 +25,7 @@ const { titles } = Astro.props;
             return id === "home" ? (
               ""
             ) : (
-              <a class="text-md" href={`/${id}`}>
+              <a class="text-md px-2" href={`/${id}`}>
                 {title}
               </a>
             );

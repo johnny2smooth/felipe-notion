@@ -1,7 +1,11 @@
 ---
 import Nav from "../components/Nav.astro";
 import Layout from "../layouts/Layout.astro";
-import { response, notion, titles } from "./index.astro";
+import { getNotion } from "../utils/getNotion";
+
+const { notion, response } = await getNotion(
+  "8310cd12974b42989c496f8b4480546e"
+);
 
 const servicesBlock = await notion.blocks.children.list({
   block_id: response.results[1].id,
@@ -9,7 +13,6 @@ const servicesBlock = await notion.blocks.children.list({
 ---
 
 <Layout title="Sobre Mí">
-  <Nav titles={titles} />
   <main class="stack">
     <h1>Sobre Mí</h1>
     {
@@ -44,5 +47,10 @@ const servicesBlock = await notion.blocks.children.list({
     font-size: 3rem;
     font-weight: 800;
     margin: 0;
+  }
+  main {
+    margin: auto;
+    padding: 1.5rem;
+    max-width: 60ch;
   }
 </style>
