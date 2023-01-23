@@ -25,8 +25,8 @@ const servicesBlock = await notion.blocks.children.list({
 ---
 
 <Layout title="Welcome to Astro.">
+  <Nav titles={titles} />
   <main class="stack">
-    <Nav titles={titles} />
     <h1>Felipe <span class="text-gradient">Matamala</span></h1>
 
     {
@@ -38,9 +38,15 @@ const servicesBlock = await notion.blocks.children.list({
           );
         } else if (block.type === "heading_2") {
           return (
-            <h2 class="text-2xl font-bold">
-              {block.heading_2.rich_text[0].plain_text}
-            </h2>
+            <a
+              class="hover:underline"
+              href={`#${block.heading_2.rich_text[0].plain_text.toLowerCase()}`}
+              id={block.heading_2.rich_text[0].plain_text.toLowerCase()}
+            >
+              <h2 class="text-2xl font-bold">
+                {block.heading_2.rich_text[0].plain_text}
+              </h2>
+            </a>
           );
         } else
           return (

@@ -5,14 +5,25 @@ export interface Props {
 const { titles } = Astro.props;
 ---
 
-<nav>
+<header
+  class="sticky top-0 z-30 h-[72px] bg-gray-900 bg-opacity-50 backdrop-blur backdrop-filter firefox:bg-opacity-90"
+>
+  <div class="mx-auto max-w-8xl xl:px-8">
+    <div
+      class="flex items-end justify-between border-b border-gray-800 px-4 py-5 sm:px-6 lg:px-8 xl:px-0"
+    >
+      <a class="text-4xl" href="/">🏠</a>
+    </div>
+  </div>
+</header>
+<!-- <nav>
   <ul>
     {
       titles.map((title) => (
         <li>
-          <a href={`#${title}`}>{title}</a>
+          <a href={`#${title.toLowerCase()}`}>{title}</a>
         </li>
       ))
     }
   </ul>
-</nav>
+</nav> -->
